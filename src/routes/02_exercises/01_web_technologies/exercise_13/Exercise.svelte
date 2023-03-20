@@ -8,5 +8,26 @@
 
 <div>
 	<h5>Famous soccer players:</h5>
-	<!--  -->
+	<ul>  <!--<ul style="list-style-type:georgian">-->
+	{#each videos as player}
+		<li> {player.name}: <a href={player.url}> {player.url}</a> </li>
+	{/each}
+	</ul>
+		
 </div>
+
+<style>
+li {
+	list-style-type: none;
+	position: relative;
+	padding-left: 15px;
+  }
+  
+  li:before {
+	content: "\25BA \0020";
+	font-size: 10px;
+	position: absolute;
+	top: 5px;
+	left: -0px;
+  }
+</style>
