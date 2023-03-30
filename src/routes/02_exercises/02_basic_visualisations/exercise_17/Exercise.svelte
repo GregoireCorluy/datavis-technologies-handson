@@ -24,9 +24,7 @@
     <!--  -->
     {#each values as val}
       <circle style="fill:red;" cx={myScale(val)} cy = {innerHeight/2} r = {radius}/>
-      <circle style="fill:green;" cx={myScale(val)} cy = {innerHeight/2} r = {radiusSmall}/>
-      
-      
-      {/each}
+      <circle style="fill:green;" cx={myScale(val)} cy = {innerHeight/2} r = {radiusSmall}/>      
+    {/each}
   </g>
 </svg>
