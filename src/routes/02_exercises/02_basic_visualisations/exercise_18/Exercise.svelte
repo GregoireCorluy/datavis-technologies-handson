@@ -21,8 +21,8 @@
   const myScale = scaleLog().domain([values.sort()[0],values.sort()[values.length-1]]).range([radius,innerWidth-radius]);
   const xAxis = axisBottom(myScale);
 
-  function myFunction(handle){
-    console.log('call axis')
+  function addAxis(handle){
+    xAxis(select(handle))
   }
 
 </script>
@@ -38,39 +38,9 @@
     {/each}
   </g>
 
-  
-  <g transform="translate({margin.left+50},{margin.top+50})" use:myFunction>
-    <circle cx=100 cy=10 r=10 />
-    <!--axisBottom(myScale)-->
-    <!--{xAxis(select(handle))}-->
-    xAxis(select(handle))
-    <g transform="translate({innerWidth/2},0)">
-      <text> x-axis </text>
-    </g>
+  <g transform="translate({margin.left},{margin.top+0.8*innerHeight})" use:addAxis>
+      <text fill = "currentcolor" font-size=20px x={innerWidth/2} y={(0.2*innerHeight)}> x-axis </text>
   </g>
-
-  <!--svg.append("g")
-            .attr("transform", "translate({margin.left+10},{margin.top+10})")
-            .call(xAxis)-->
-
-
-  <!--{xAxis}-->
-
-  <!--
-  <svg x="0" y={margin.top+innerWidth/2} height={innerHeight/2} width={innerWidth}>
-    
-    <circle style="fill:red;" cx={100} cy = {innerHeight/2} r = {radius}/>
-    <g transform="translate({margin.left},{margin.top+innerWidth})">
-      {xAxis}
-    </g>
-  </svg>
-  -->
   
 </svg>
 
-<style>
-  svg {
-    border: 1px solid black;
-    border-radius: 5px;
-  }
-</style>
