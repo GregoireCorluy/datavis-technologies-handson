@@ -35,4 +35,6 @@
 
 {#if loaded}
     <Scatterplot data_scatter={data_app} loaded_scatter={loaded}/>
+{:else}
+    <div> The data is loading...</div>
 {/if}
