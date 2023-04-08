@@ -4,6 +4,8 @@
 
   import {scaleLinear, scaleLog, scaleOrdinal} from 'd3-scale';
   import {schemeSet1} from "d3-scale-chromatic";
+  import {axisBottom, axisLeft} from "d3-axis";
+  import {select} from "d3-selection";
 
   // Dimensions
   const [height, width] = [400, 600];
@@ -81,7 +83,24 @@
     const continents = findCategories(data_scatter,'continent');
 
     const colorScale = scaleOrdinal().domain(continents).range(schemeSet1.slice(0,continents.length-1));
-  
+    
+    const numberXTicks = 10;
+    const numberYTicks = 10;
+
+    //axis
+    const xAxis = axisBottom(xScale).ticks(numberXTicks);
+
+    const yAxis = axisLeft(yScale).ticks(numberYTicks);
+
+    function addAxisX(handle){
+      xAxis(select(handle));
+
+    }
+
+    function addAxisY(handle){
+      yAxis(select(handle));
+
+    }
 </script>
 
 <svg viewBox="0 0 {width} {height}" style="max-width: {width}px">
@@ -97,16 +116,18 @@
     <text fill="currentcolor" style="color: #ff744a; font-size:{font_size_title}" x={innerWidth/2} y={-10-font_size_title*0.91}> Life expectancy in function of the income</text>
     <text fill="currentcolor" style="color: #289026; font-size:{font_size_label}" x={innerWidth/2} y=-10> Year 1800</text>
     
+    <!-- add x and y axis with the labels-->
+    <g transform="translate(0,{innerHeight})" use:addAxisX> <!-- {0.5*margin.left},{margin.top + 0.9*innerHeight}-->
+      <text font-size= "1.3em" fill = "currentcolor" text-anchor="middle" transform="translate({innerWidth/2},{0.5*margin.bottom})"> Income </text>
+
+    </g>
+
+    <g class="yLabel" transform="translate(0,0)" use:addAxisY>
+      <text font-size= "1.3em" fill = "currentcolor" text-anchor="middle" transform="translate({-0.5*margin.left},{innerHeight/2}) rotate(-90)"> Life expectancy </text>
+    </g>
+
   </g>
 </svg>
-
-
-<!--{loaded_scatter}
-{data_scatter[0].country}
-{data_scatter[0].country}
-{data_scatter[0][key_val]}
-{findMax(data_scatter, "life_exp")}-->
-
 
 <style>
   svg g text{
