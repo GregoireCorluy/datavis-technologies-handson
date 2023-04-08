@@ -101,18 +101,45 @@
       yAxis(select(handle));
 
     }
+
+    //actions when circle is hovered
+    let hovered = false;
+
+    function handleMouseOver(e) {
+		  hovered = true;
+	  }
+	  function handleMouseOut(e) {
+		  hovered = false;
+	  }
+
+    const startLegendX = 420;
+    const startLegendY = 100;
+    const widthLegend = 110;
+    const heightLegend = 175;
 </script>
 
 <svg viewBox="0 0 {width} {height}" style="max-width: {width}px">
   <g transform="translate({margin.left}, {margin.top})">
     <!--  -->
+
+    <!-- legend that appears when a circle is hovered-->
+    {#if hovered}
+      <rect id="legend" x={startLegendX} y={startLegendY} width={widthLegend} height={heightLegend} />
+      <!--<text fill="currentcolor" style="color: #ff744a; font-size:{font_size_title}" x={innerWidth/2} y={-10-font_size_title*0.91}> Life expectancy in function of the income</text>
+      <text fill="currentcolor" style="color: #ff744a; font-size:{font_size_title}" x={innerWidth/2} y={-10-font_size_title*0.91}> Life expectancy in function of the income</text>
+      <text fill="currentcolor" style="color: #ff744a; font-size:{font_size_title}" x={innerWidth/2} y={-10-font_size_title*0.91}> Life expectancy in function of the income</text>
+      -->
+      {/if}
+    
+    <!-- plot all the points-->
     {#each data_scatter as datapoint}
       {#if datapoint.income!=null && datapoint.life_exp!=null}
-        <circle stroke = "black" style="fill:{colorScale(datapoint.continent)};" cx ={xScale(+datapoint.income)} cy={yScale(+datapoint.life_exp)} r={radiusScale(+datapoint.population)} />
+        <circle stroke = "black" style="fill:{colorScale(datapoint.continent)};" cx ={xScale(+datapoint.income)} cy={yScale(+datapoint.life_exp)} r={radiusScale(+datapoint.population)} on:mouseover={handleMouseOver} on:mouseout={handleMouseOut} />
         <!-- plus sign is added to the values to indicate that the values are numeric-->
       {/if}
     {/each}
 
+    <!-- title and label below-->
     <text fill="currentcolor" style="color: #ff744a; font-size:{font_size_title}" x={innerWidth/2} y={-10-font_size_title*0.91}> Life expectancy in function of the income</text>
     <text fill="currentcolor" style="color: #289026; font-size:{font_size_label}" x={innerWidth/2} y=-10> Year 1800</text>
     
@@ -126,8 +153,10 @@
       <text font-size= "1.3em" fill = "currentcolor" text-anchor="middle" transform="translate({-0.5*margin.left},{innerHeight/2}) rotate(-90)"> Life expectancy </text>
     </g>
 
+    
   </g>
 </svg>
+
 
 <style>
   svg g text{
@@ -147,6 +176,12 @@
     opacity:1;
     stroke: red;
     stroke-width: 2px;
+  }
+
+  #legend{
+    stroke:black;
+    stroke-width: 2px;
+    fill: white;
   }
 
 </style>
